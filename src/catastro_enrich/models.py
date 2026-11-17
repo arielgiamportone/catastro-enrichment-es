@@ -189,6 +189,7 @@ class RunStats:
     ok: int = 0
     errors: int = 0
     written: int = 0
+    would_write: int = 0
     not_found: int = 0
     invalid: int = 0
     net: int = 0
@@ -204,6 +205,7 @@ class RunStats:
 
     def extra(self) -> dict[str, Any]:
         return {
+            "would_write": self.would_write,
             "not_found": self.not_found,
             "invalid": self.invalid,
             "net": self.net,
