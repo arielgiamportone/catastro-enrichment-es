@@ -284,7 +284,9 @@ class DgcDriver(CadastreDriver):
         root, code = self._get_xml(self.inspire_url, params)
         if root is None:
             return None, code
-        feature = find_first(root, "CadastralParcel") or first_member(root)
+        feature = find_first(root, "CadastralParcel")
+        if feature is None:
+            feature = first_member(root)
         if feature is None:
             return None, NOT_FOUND
         return feature, ""
