@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local data: never commit inventories, backups or downloaded imagery
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.backup-*
+enrichment/
+scratch/
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+# Secrets and local configuration
+.env
+*.local.toml
+config.toml
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

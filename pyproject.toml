@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "catastro_enrich"
+version = "0.1.0"
+description = "Enrich Spanish property inventories with cadastral data (DGC and foral cadastres), fallback geocoding and licence-aware imagery."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "arielgiamportone" }]
+keywords = [
+  "catastro",
+  "cadastre",
+  "spain",
+  "inspire",
+  "wfs",
+  "wms",
+  "geocoding",
+  "nominatim",
+  "govtech",
+  "property-inventory",
+  "utm",
+  "wgs84",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: GIS",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
+  "Natural Language :: Spanish",
+  "Natural Language :: English",
+]
+dependencies = ["pyproj>=3.4"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/arielgiamportone/catastro-enrichment-es"
+Repository = "https://github.com/arielgiamportone/catastro-enrichment-es"
+Issues = "https://github.com/arielgiamportone/catastro-enrichment-es/issues"
+Changelog = "https://github.com/arielgiamportone/catastro-enrichment-es/blob/main/CHANGELOG.md"
+
+[project.scripts]
+catastro-enrich = "catastro_enrich.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+catastro_enrich = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "N", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "RUF012"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
