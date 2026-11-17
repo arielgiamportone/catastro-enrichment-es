@@ -187,3 +187,42 @@ def test_territory_override_is_upper_cased():
         "Provincia": "LAS PALMAS",
         "Municipio": "INGENIO",
     }
+
+
+def test_physical_expands_parcel_units_and_aggregates(transport):
+    parcel = synthetic.synthetic_rc(9)
+    unit_a, unit_b = parcel + "0001AB", parcel + "0002CD"
+    transport.add(
+        unit_a,
+        synthetic.dgc_physical_xml(
+            [{"sfc": 300, "ant": 1990, "luso": "Residencial"}], ldt="CL UNIDAD 1"
+        ),
+    )
+    transport.add(
+        unit_b, synthetic.dgc_physical_xml([{"sfc": 200, "ant": 1975, "luso": "Almacen"}])
+    )
+    transport.add("Consulta_DNPRC", synthetic.dgc_unit_list_xml([unit_a, unit_b]))
+    result = make(transport).physical_data(parcel)
+    assert (
+        result.ok and result.area_m2 == 500 and result.year == 1975 and result.use == "Residencial"
+    )
+    assert result.description == "CL UNIDAD 1"
+    assert (
+        result.raw["units"] == 2
+        and result.raw["expanded_units"] == 2
+        and not result.raw["truncated"]
+    )
+    assert [r.params["RC"] for r in transport.requests] == [parcel, unit_a, unit_b]
+
+
+def test_physical_unit_expansion_is_capped_and_tolerates_unit_errors(transport):
+    parcel = synthetic.synthetic_rc(10)
+    units = [parcel + f"{i:04d}ZZ" for i in range(1, 6)]
+    transport.add(units[0], synthetic.dgc_error_xml(5, "unit error"))
+    transport.add(units[1], synthetic.dgc_physical_xml([{"sfc": 50, "ant": 2001}]))
+    transport.add(units[2], None)
+    transport.add("Consulta_DNPRC", synthetic.dgc_unit_list_xml(units))
+    result = make(transport, max_units=3).physical_data(parcel)
+    assert result.ok and result.area_m2 == 50 and result.year == 2001
+    assert result.raw["truncated"] is True and result.raw["skipped_units"] == [units[0], units[2]]
+    assert transport.calls == 4

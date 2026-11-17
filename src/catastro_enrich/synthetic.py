@@ -173,6 +173,7 @@ def dgc_physical_xml(
     units: Sequence[Mapping[str, object]],
     *,
     constructions: Sequence[Mapping[str, object]] = (),
+    ldt: str = "",
 ) -> bytes:
     """Consulta_DNPRC-style response.
 
@@ -180,8 +181,9 @@ def dgc_physical_xml(
     ``luso`` (use); ``constructions`` are ``cons`` entries with ``lcd``,
     ``pt`` and ``stl``.
     """
+    ldt_xml = f"<ldt>{escape(ldt)}</ldt>" if ldt else ""
     unit_xml = "".join(
-        "<bi><debi>"
+        f"<bi>{ldt_xml}<debi>"
         f"<luso>{escape(str(u.get('luso', '')))}</luso>"
         f"<sfc>{u.get('sfc', '')}</sfc>"
         f"<ant>{u.get('ant', '')}</ant>"
@@ -200,6 +202,23 @@ def dgc_physical_xml(
 <consulta_dnp xmlns="{OVC_NS}">
   <control><cudnp>{len(units)}</cudnp><cucons>{len(constructions)}</cucons><cuerr>0</cuerr></control>
   <bico>{unit_xml}<lcons>{cons_xml}</lcons></bico>
+</consulta_dnp>""".encode()
+
+
+def dgc_unit_list_xml(unit_rcs: Iterable[str]) -> bytes:
+    """Consulta_DNPRC-style answer for a parcel with several units: the list
+    of 20-character references without physical data."""
+    items = "".join(
+        "<rcdnp><rc>"
+        f"<pc1>{escape(rc[:7])}</pc1><pc2>{escape(rc[7:14])}</pc2>"
+        f"<car>{escape(rc[14:18])}</car><cc1>{escape(rc[18:19])}</cc1><cc2>{escape(rc[19:20])}</cc2>"
+        "</rc></rcdnp>"
+        for rc in unit_rcs
+    )
+    return f"""<?xml version="1.0" encoding="utf-8"?>
+<consulta_dnp xmlns="{OVC_NS}">
+  <control><cudnp>{items.count("<rcdnp>")}</cudnp><cuerr>0</cuerr></control>
+  <lrcdnp>{items}</lrcdnp>
 </consulta_dnp>""".encode()
 
 

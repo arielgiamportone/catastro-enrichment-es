@@ -33,3 +33,7 @@ config.toml
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Coverage and tooling output
+.coverage*
+htmlcov/
