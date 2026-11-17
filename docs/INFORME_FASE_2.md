@@ -66,7 +66,7 @@ impacto:
 | Cobertura de líneas (`pytest-cov`, no incluido en las dependencias) | 97 % |
 | `ruff check .` y `ruff format --check .` | sin avisos |
 | `tests/test_no_leaks.py` | árbol, nombres de fichero y `git log -p` de la rama limpios |
-| CI (`.github/workflows/ci.yml`) | tests en 3.11 y 3.12, ruff, gitleaks; pendiente de confirmar en GitHub tras el push |
+| CI (`.github/workflows/ci.yml`) | en verde en GitHub Actions (run 2 de la rama): tests en 3.11 y 3.12, ruff, gitleaks |
 
 Comprobaciones manuales contra los servicios públicos (noviembre de 2026),
 sin guardar ninguna respuesta ni referencia real:
@@ -97,6 +97,10 @@ sin guardar ninguna respuesta ni referencia real:
   cayeron por un momento en el directorio del repositorio; se movieron fuera
   antes de cualquier `git add` y no aparecen en el historial (el test de
   fugas y `git log --stat` lo confirman).
+- **gitleaks en CI.** La acción oficial calculaba en el primer push un rango
+  `raíz^..HEAD` inexistente y fallaba antes de escanear; el job instala el
+  binario fijado (8.24.3) y escanea todo el historial y el árbol, lo que
+  también sirve cuando se reemplace `main`.
 - Los mensajes de commit llevan los trailers `Co-Authored-By` y
   `Claude-Session` que añade la herramienta de sesión. Si se prefiere un
   historial sin ellos, basta un `git filter-repo --message-callback` antes
