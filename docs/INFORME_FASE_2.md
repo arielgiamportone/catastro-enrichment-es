@@ -101,10 +101,9 @@ sin guardar ninguna respuesta ni referencia real:
   `raíz^..HEAD` inexistente y fallaba antes de escanear; el job instala el
   binario fijado (8.24.3) y escanea todo el historial y el árbol, lo que
   también sirve cuando se reemplace `main`.
-- Los mensajes de commit llevan los trailers `Co-Authored-By` y
-  `Claude-Session` que añade la herramienta de sesión. Si se prefiere un
-  historial sin ellos, basta un `git filter-repo --message-callback` antes
-  de publicar; no contienen palabras prohibidas.
+- Los mensajes de commit llevaban dos trailers añadidos por la herramienta de
+  sesión; se eliminaron reescribiendo el historial antes de publicar la rama
+  definitiva. Autor y committer de todos los commits son `arielgiamportone`.
 
 ## 6. Qué revisar en la fase 3
 
