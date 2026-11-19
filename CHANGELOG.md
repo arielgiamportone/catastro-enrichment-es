@@ -4,7 +4,7 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-11-19
 
 ### Added
 
@@ -31,3 +31,6 @@ All notable changes to this project are documented here. The format follows
   rules.
 - Bilingual case-study README (`README.md`, `README.es.md`) and design notes
   in `docs/`.
+- Packaging for PyPI: distribution name `catastro-enrich` (import stays
+  `catastro_enrich`), SPDX licence expression, `publish.yml` with trusted
+  publishing, absolute README links.

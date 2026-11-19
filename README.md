@@ -1,6 +1,7 @@
 # catastro-enrichment-es
 
 [![CI](https://github.com/arielgiamportone/catastro-enrichment-es/actions/workflows/ci.yml/badge.svg)](https://github.com/arielgiamportone/catastro-enrichment-es/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/catastro-enrich.svg)](https://pypi.org/project/catastro-enrich/)
 ![Python 3.11 | 3.12](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
 ![License MIT](https://img.shields.io/badge/license-MIT-green)
 
@@ -10,9 +11,11 @@ using only free public services: the five Spanish cadastres behind one
 interface, Nominatim as fallback geocoder, PNOA orthophotos and Mapillary
 street views stored with their attribution, and Google as live links only.
 
-*Versión en español: [README.es.md](README.es.md).*
+*Versión en español: [README.es.md](https://github.com/arielgiamportone/catastro-enrichment-es/blob/main/README.es.md).*
 
 > Patterns developed during my work at Intervalor Data and published with permission. Independent clean-room implementation with synthetic data; it contains no code or data from the company or its clients.
+
+Install: `pip install catastro-enrich` (the importable package is `catastro_enrich`).
 
 ## The problem
 
@@ -96,7 +99,7 @@ coordinate, and only `exact` hits are persisted unless `--accept-zone`.
 | Errors | Codes in the result object | Exceptions | A batch must count and continue |
 
 Further decisions taken during implementation are listed in
-[docs/DECISIONES.md](docs/DECISIONES.md) (Spanish).
+[docs/DECISIONES.md](https://github.com/arielgiamportone/catastro-enrichment-es/blob/main/docs/DECISIONES.md) (Spanish).
 
 ## What was measured and how to reproduce it
 
@@ -216,4 +219,4 @@ list runs in CI alongside `gitleaks`.
 
 ## License
 
-MIT. See [LICENSE](LICENSE) and [CHANGELOG.md](CHANGELOG.md).
+MIT. See [LICENSE](https://github.com/arielgiamportone/catastro-enrichment-es/blob/main/LICENSE) and [CHANGELOG.md](https://github.com/arielgiamportone/catastro-enrichment-es/blob/main/CHANGELOG.md).
